@@ -45,3 +45,27 @@ x ≡⟨ x≡y ⟩ y≡z = trans x≡y y≡z
 
 _∘ : {A : Set} (x : A) → x ≡ x
 x ∘ = refl
+
+data List {a} (A : Set a) : Set a where
+  []  : List A
+  _∷_ : (x : A) (xs : List A) → List A
+
+foldr : ∀ {a b} {A : Set a} {B : Set b} → (A → B → B) → B → List A → B
+foldr c n []       = n
+foldr c n (x ∷ xs) = c x (foldr c n xs)
+
+-- foldr-fusion : {A B C : Set}
+--   (h : B → C) {f : A → B → B} {g : A → C → C} {e : B} →
+--     (∀ x y → h (f x y) ≡ g x (h y)) →
+--       ∀ xs → h (foldr f e xs) ≡ foldr g (h e) xs
+-- foldr-fusion h {f} {g} {e} fusion-condition [ ] = refl
+-- foldr-fusion h {f} {g} {e} fusion-condition (x :: xs) =
+--   h (foldr f e (x :: xs))
+--   ≡⟨ refl ⟩
+--   h (f x (foldr f e xs))
+--   ≡⟨ fusion-condition x (foldr f e xs) ⟩
+--   g x (h (foldr f e xs))
+--   ≡⟨ cong (g x) (foldr-fusion h fusion-condition xs) ⟩
+--   g x (foldr g (h e) xs)
+--   ≡⟨ refl ⟩
+--   foldr g (h e) (x :: xs) ∘
