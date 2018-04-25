@@ -26,3 +26,23 @@ data _≡_ {A : Set} : A → A → Set where      -- equality
 
 -- Encoding "every natural number is either zero or a successor of some natural number."
 -- (n : ℕ) → (n ≡ zero ⨄ ∃ (λm → n ≡ suc m))
+
+-- Generalized Product type where the second component's type "depends" on the first component
+data Σ (A : Set) (B : A → Set) : Set where
+  _,_ : (a : A) → B a → Σ A B
+
+trans : {A : Set} {x y z : A} → x ≡ y → y ≡ z → x ≡ z
+trans refl refl = refl
+
+sym : {A : Set} {x y : A} → x ≡ y → y ≡ x
+sym refl = refl
+
+cong : {A B : Set} (f : A → B) {x y : A} → x ≡ y → f x ≡ f y
+cong f refl = refl
+
+
+
+
+
+
+
