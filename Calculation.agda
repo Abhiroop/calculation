@@ -23,3 +23,6 @@ data ∃ {A : Set} (P : A → Set) : Set where  -- existential quantification
 
 data _≡_ {A : Set} : A → A → Set where      -- equality
   refl : {x : A} → x ≡ x
+
+-- Encoding "every natural number is either zero or a successor of some natural number."
+-- (n : ℕ) → (n ≡ zero ⨄ ∃ (λm → n ≡ suc m))
