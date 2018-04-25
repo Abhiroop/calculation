@@ -1,4 +1,4 @@
-module Calculation where
+module Calculation  where
 
 -- First order intuitionistic logic
 
@@ -40,9 +40,8 @@ sym refl = refl
 cong : {A B : Set} (f : A → B) {x y : A} → x ≡ y → f x ≡ f y
 cong f refl = refl
 
+_≡⟨_⟩_ : {A : Set} (x : A) {y z : A} → x ≡ y → y ≡ z → x ≡ z
+x ≡⟨ x≡y ⟩ y≡z = trans x≡y y≡z
 
-
-
-
-
-
+_∘ : {A : Set} (x : A) → x ≡ x
+x ∘ = refl
